@@ -13,15 +13,18 @@ namespace Module6HW5.Controllers
     public class AccountController : Controller
     {
         private ApplicationContext _context;
+
         public AccountController(ApplicationContext context)
         {
             _context = context;
         }
+
         [HttpGet]
         public IActionResult Register()
         {
             return View();
         }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Register(RegisterModel model)
@@ -42,18 +45,20 @@ namespace Module6HW5.Controllers
 
                     await Authenticate(user); // аутентификация
 
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction("List", "User");
                 }
                 else
                     ModelState.AddModelError("", "Некорректные логин и(или) пароль");
             }
             return View(model);
         }
+
         [HttpGet]
         public IActionResult Login()
         {
             return View();
         }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Login(LoginModel model)
@@ -67,7 +72,7 @@ namespace Module6HW5.Controllers
                 {
                     await Authenticate(user); // аутентификация
 
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction("List", "User");
                 }
                 ModelState.AddModelError("", "Некорректные логин и(или) пароль");
             }
