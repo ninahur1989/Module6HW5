@@ -1,6 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Module6HW5.Models;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
+using System.Security.Claims;
+using Module6HW5.Models;
 
 namespace Module6HW5.Controllers
 {
@@ -13,9 +15,11 @@ namespace Module6HW5.Controllers
             _logger = logger;
         }
 
+        [Authorize(Roles = "admin, user")]
         public IActionResult Index()
         {
-            return View();
+            string role = User.FindFirst(x => x.Type == ClaimsIdentity.DefaultRoleClaimType).Value;
+            return Content($"ваша роль: {role}");
         }
 
         public IActionResult Privacy()
@@ -27,6 +31,12 @@ namespace Module6HW5.Controllers
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+
+        [Authorize(Roles = "admin")]
+        public IActionResult About()
+        {
+            return Content("Вход только для администратора");
         }
     }
 }

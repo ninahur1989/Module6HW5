@@ -1,0 +1,23 @@
+﻿@using Module6HW5.Models
+@model IEnumerable< CreateUserParameters>
+@{
+    ViewData["Title"] = "Update";
+}
+
+<h1>List</h1>
+@{
+    foreach(var a in Model)
+    {
+        <div>
+        job
+            @a.Job
+        </div>
+        <div>
+        name
+            @a.Name
+        </div>
+    }
+}
+<a>dasds</a>
+<a>drill</a>
+
